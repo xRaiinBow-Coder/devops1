@@ -21,8 +21,8 @@ const studentSchema = new mongoose.Schema({ name: String, age: Number, course: S
 const Student = mongoose.model("Student", studentSchema); 
 
 app.get("/", (req, res) => { 
-    //res.redirect("/students"); 
-    res.redirect("Hello from NCG");
+    res.redirect("/students"); 
+    
     }); 
 
 app.get("/students", async (req, res) => {
