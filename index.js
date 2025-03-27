@@ -22,7 +22,7 @@ const Student = mongoose.model("Student", studentSchema);
 
 app.get("/", (req, res) => { 
     //res.redirect("/students"); 
-    res.send("Hello from NCG");
+    res.redirect("Hello from NCG");
     }); 
 
 app.get("/students", async (req, res) => {
