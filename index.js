@@ -22,7 +22,7 @@ const Student = mongoose.model("Student", studentSchema);
 
 app.get("/", (req, res) => { 
     //res.redirect("/students"); 
-    res.send("Hello from NCG")
+    res.send("Hello from NCG");
     }); 
 
 app.listen(3000, "Server is up and running on port 3000")
