@@ -25,3 +25,18 @@ jobs:
     - name: Build Docker image
       run: |
         docker build -t devops .
+
+    - name: Deploy to server via SSH
+      uses: appleboy/ssh-action@v0.1.8
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          cd /path/to/your/app
+          git pull origin main
+          docker build -t devops .
+          docker stop devops || true
+          docker rm devops || true
+          docker run -d -p 10050:10049 --name devops devops
+
