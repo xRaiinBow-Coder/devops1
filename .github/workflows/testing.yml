@@ -1,9 +1,9 @@
 name: CI/CD
-#sdhfjksdhfjksdjkfhsjkdhfjksdhjkfhskdjfhkjsdhkjfsdjkhfkjsdhfkjshd
+
 on: 
   push:
     branches: [main]
-#jsjkdjflksdfkljsdklfklsdjfkljsldkjfklsdjfkljsdkljflksdjlfkjsdklfjklsdjfkljsdlkfjkl
+
 jobs:
   build:
     runs-on: ubuntu-latest
