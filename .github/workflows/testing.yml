@@ -38,5 +38,5 @@ jobs:
           docker build -t devops .
           docker stop devops || true
           docker rm devops || true
-          docker run -d -p 10050:10049 --name devops devops 
+          docker run -d -p 10049:10049 --name devops devops 
 
