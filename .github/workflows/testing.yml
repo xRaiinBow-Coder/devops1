@@ -25,7 +25,7 @@ jobs:
     - name: Build Docker image
       run: |
         docker build -t devops .
-
+#private key added
     - name: Deploy to server via SSH
       uses: appleboy/ssh-action@v0.1.8
       with:
