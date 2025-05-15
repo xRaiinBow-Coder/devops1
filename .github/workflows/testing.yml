@@ -43,13 +43,11 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-      - name: Merge develop into main allowing unrelated histories
+      - name: Merge develop into main allowing unrelated histories and push with PAT
         run: |
           git fetch origin
           git merge origin/develop --allow-unrelated-histories --no-edit
-          git push origin main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git push https://${{ secrets.PAT_TOKEN }}@github.com/xRaiinBow-Coder/devops1.git main
 
   ci:
     if: github.ref == 'refs/heads/main'
@@ -115,4 +113,3 @@ jobs:
         working-directory: ./IaC
         env:
           TF_VAR_image_tag: ${{ github.sha }}
-#a
