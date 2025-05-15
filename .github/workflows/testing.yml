@@ -62,8 +62,15 @@ jobs:
         password: ${{ secrets.REMOTE_PASSWORD }}
         script: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/devops:${{ github.sha }}
-          docker stop devops || true
-          docker rm devops || true
+
+          # Force kill old container if exists
+          CONTAINER_ID=$(docker ps -q --filter "name=devops")
+          if [ ! -z "$CONTAINER_ID" ]; then
+            docker kill $CONTAINER_ID
+            docker rm $CONTAINER_ID
+          fi
+
+          # Run new container
           docker run -d --name devops -p 10049:3000 ${{ secrets.DOCKER_USERNAME }}/devops:${{ github.sha }}
 
     - name: Set up Terraform
