@@ -29,7 +29,7 @@ resource "docker_container" "app" {
 
   ports {
     internal = 3000
-    external = 10049
+    external = 10047
   }
 
   env = [

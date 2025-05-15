@@ -18,12 +18,10 @@ jobs:
         node-version: '16'
 
     - name: Install dependencies
-      run: |
-        npm install
+      run: npm install
 
     - name: Build Docker image
-      run: |
-        docker build -t devops .
+      run: docker build -t devops .
 
   cd:
     runs-on: ubuntu-latest
@@ -40,8 +38,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build Docker image for CD
-      run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/devops:${GITHUB_SHA} .
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/devops:${GITHUB_SHA} .
 
     - name: Tag Docker image
       run: |
@@ -62,21 +59,9 @@ jobs:
         password: ${{ secrets.REMOTE_PASSWORD }}
         script: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/devops:${{ github.sha }}
-
-          # Stop container if running
-          CONTAINER_ID=$(docker ps -q --filter "name=devops")
-          if [ ! -z "$CONTAINER_ID" ]; then
-            docker stop $CONTAINER_ID || true
-          fi
-
-          # Remove container if exists (running or stopped)
-          CONTAINER_ID_ALL=$(docker ps -aq --filter "name=devops")
-          if [ ! -z "$CONTAINER_ID_ALL" ]; then
-            docker rm $CONTAINER_ID_ALL || true
-          fi
-
-          # Run new container
-          docker run -d --name devops -p 10049:3000 ${{ secrets.DOCKER_USERNAME }}/devops:${{ github.sha }}
+          docker stop devops || true
+          docker rm devops || true
+          docker run -d --name devops -p 10047:3000 ${{ secrets.DOCKER_USERNAME }}/devops:${{ github.sha }}
 
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v3
@@ -94,4 +79,5 @@ jobs:
       working-directory: ./IaC
       env:
         TF_VAR_image_tag: ${{ github.sha }}
+
 
